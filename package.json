@@ -1,0 +1,24 @@
+{
+  "name": "sentimentscorerbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "filehound": "^1.16.1",
+    "fs": "0.0.1-security",
+    "ipware": "^1.0.0",
+    "jsonfile": "^3.0.0",
+    "mongoose": "^4.10.6",
+    "mongoose-random": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

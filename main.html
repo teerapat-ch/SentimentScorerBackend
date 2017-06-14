@@ -1,0 +1,221 @@
+<html>
+<title>Comments Annotating</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+    body,h1 {font-family: "Raleway", sans-serif}
+    body, html {height: 100%}
+    .bgimg {
+        background-image: url('pic/bg.jpg');
+        background-color: ;
+        min-height: 100%;
+        background-position: center;
+        background-size: cover;
+    }
+    .veryred {
+        color: #fff;
+        background-color: #ff0000;
+    }
+
+    .littlered {
+        color: #fff;
+        background-color: #ff8566;
+    }
+    .littlegreen {
+        color: #fff;
+        background-color: #33ff33;
+    }
+    .verygreen {
+        color: #fff;
+        background-color: #00cc00;
+    }
+    .veryyellow {
+        color: #000;
+        background-color: #ffff00;
+    }
+
+    .loader {
+        border: 6px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 6px solid #3498db;
+        margin-top:20px;
+        width: 50px;
+        height: 50px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+
+    }
+
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #loading_text{
+        color:gray;
+    }
+
+</style>
+<body>
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+
+    <div class="w3-card w3-padding-large w3-display-middle w3-white">
+        <div class="w3-animate-zoom">
+            <h1 class="w3-medium w3-gray w3-padding"><b>Comment No.<span id="comment_id"></span></b></h1>
+
+            <h1 class="w3-large">
+                <b id="message">
+                    <!-- **********Text Here***********-->
+                    Loading
+                </b>
+                <center id="loading_bar">
+                    <div id="loading_text"> Loading...</div>
+                    <div class="loader"></div>
+                </center>
+            </h1><br>
+
+
+            <!-- **********Score Button******** -->
+            <center>
+                <table class="table-responsive">
+                    <tr>
+                        <td><b><button onclick="sendScore(-2)" class="w3-button w3-xlarge veryred w3-hover-white" style="width: 100%">-2</button></b></td>
+                        <td><b><button onclick="sendScore(-1)" class="w3-button w3-xlarge littlered w3-hover-white" style="width: 100%">-1</button></b></td>
+                        <td><b><button onclick="sendScore(0)" class="w3-button w3-xlarge w3-blue w3-hover-white" style="width: 100%">0</button></b></td>
+                        <td><b><button onclick="sendScore(1)" class="w3-button w3-xlarge littlegreen w3-hover-white" style="width: 100%">1</button></b></td>
+                        <td><b><button onclick="sendScore(2)" class="w3-button w3-xlarge verygreen w3-hover-white" style="width: 100%">2</button></b></td>
+                        <td><b><button onclick="sendScore(-32)" class="w3-button w3-xlarge veryyellow w3-hover-white" style="width: 100%">>></button></b></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><b><button onclick="sendScore(null)" class="w3-button w3-xlarge w3-gray w3-hover-white" style="width: 100%">X</button></b></td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+    </div>
+    <div class="w3-display-bottomleft w3-padding-large " style='color: black'>
+        Powered by <img src="pic/Dtac-logo-DB5F43B6C3-seeklogo.com.png" style="width: 10%">
+    </div>
+</div>
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+    //TODO. Load 10 แล้วต่อคิว omg I am genius.
+
+
+    var currentComment = null;
+    var queuedComment = [];
+    const maxComment = 40;
+    const ROOT_URL = 'http://localhost:3000';
+    var loading = false;
+    //Init
+    //getNextComment
+    getNextComment();
+
+    //getNextComment
+    function getNextComment(){
+
+
+        //GET Request to /getNextComment
+
+        $("#commentLeft").text(queuedComment.length);
+        $("#commentNumber").text(maxComment);
+
+
+        if(queuedComment.length<=0){
+            loadComments(maxComment-queuedComment.length);
+            return;
+        }
+
+
+        currentComment = queuedComment.shift();
+
+        const message = currentComment.message; //const {x} = y might not work in some devices.
+        const commentId = currentComment._id;
+
+        $( "#message" ).text(message);
+        $( "#comment_id" ).text(commentId);
+
+
+
+    }
+
+    function loadComments(n){
+
+        var start = new Date().getTime();
+
+
+
+
+        loading = true;
+        $('.w3-button').prop('disabled', true);
+        $("#message").text('');
+
+        $("#loading_bar").show();
+        //GET Request to /getNextComment
+        $.get( ROOT_URL+"/getRandomComments/"+n, function( data ) {
+
+
+            //Time how many seconds to download
+            var end = new Date().getTime();
+            var time = end - start;
+            $("#loadedTime").text((time/1000).toFixed(2)+"s");
+            //After get the json from the server,
+            //Save it to current comment
+            console.log(data);
+            if(data=='alldone'){
+                alert("No comment left! Thank you");
+                return;
+            }
+            queuedComment = queuedComment.concat(data);
+            $('.w3-button').prop('disabled', false);
+            $("#loading_bar").hide();
+            loading = false;
+            getNextComment();
+        });
+
+    }
+
+
+    function sendScore(score){
+        //sendScore (Activate on click with argument score)
+        //POST Request to /score/:currentCommend.post_id
+        //getNextComent
+        if(score==null){
+            getNextComment();
+            return;
+        }
+
+        $.post( ROOT_URL+"/sendScore", {comment_id:currentComment._id,score:score},function( data ) {
+            console.log(data);
+            if(data=='success'){
+                getNextComment();
+            }
+            else{
+                alert("Something's wrong. Please inform admin.")
+            }
+            //getNextComent
+        });
+    }
+
+
+
+</script>
+
+</body>
+</html>
