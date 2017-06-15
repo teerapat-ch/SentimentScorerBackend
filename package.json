@@ -15,6 +15,7 @@
     "fs": "0.0.1-security",
     "ipware": "^1.0.0",
     "jsonfile": "^3.0.0",
+    "moment": "^2.18.1",
     "mongoose": "^4.10.6",
     "mongoose-random": "^0.1.1",
     "mongoose-simple-random": "^0.4.1"

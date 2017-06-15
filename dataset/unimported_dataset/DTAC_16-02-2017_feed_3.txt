@@ -1,0 +1,1 @@
+{"data": [{"created_time": "2017-02-17T03:57:54+0000", "from": {"name": "อยู่ตรงนี้ ที่เดิม", "id": "1906244009611409"}, "message": "ขอเบอโท ติดต่อของศูนย์ดีแทคโรบินสันศรีราชาด้วยค่ะ", "can_remove": false, "like_count": 0, "user_likes": false, "id": "10155602477762069_10155606158222069"}], "paging": {"cursors": {"before": "MQZDZD", "after": "MQZDZD"}}}

@@ -70,7 +70,7 @@
 
     <div class="w3-card w3-padding-large w3-display-middle w3-white">
         <div class="w3-animate-zoom">
-            <h1 class="w3-medium w3-gray w3-padding"><b>Comment No.<span id="comment_id"></span></b></h1>
+            <h1 class="w3-medium w3-gray w3-padding"><b>Comment At: <span id="commented_date"></span></b></h1>
 
             <h1 class="w3-large">
                 <b id="message">
@@ -94,9 +94,12 @@
                         <td><b><button onclick="sendScore(0)" class="w3-button w3-xlarge w3-blue w3-hover-white" style="width: 100%">0</button></b></td>
                         <td><b><button onclick="sendScore(1)" class="w3-button w3-xlarge littlegreen w3-hover-white" style="width: 100%">1</button></b></td>
                         <td><b><button onclick="sendScore(2)" class="w3-button w3-xlarge verygreen w3-hover-white" style="width: 100%">2</button></b></td>
-                        <td><b><button onclick="sendScore(null)" class="w3-button w3-xlarge veryyellow w3-hover-white" style="width: 100%">>></button></b></td>
-                        <td>&nbsp;&nbsp;</td>
                         <td><b><button onclick="sendScore(-32)" class="w3-button w3-xlarge w3-gray w3-hover-white" style="width: 100%">X</button></b></td>
+
+                        <td>&nbsp;&nbsp;</td>
+
+                        <td><b><button onclick="sendScore(null)" class="w3-button w3-xlarge veryyellow w3-hover-white" style="width: 100%">>></button></b></td>
+
                     </tr>
                 </table>
             </center>
@@ -147,10 +150,10 @@
         currentComment = queuedComment.shift();
 
         const message = currentComment.message; //const {x} = y might not work in some devices.
-        const commentId = currentComment._id;
+        const commentDate = new Date(currentComment.created_time);
 
         $( "#message" ).text(message);
-        $( "#comment_id" ).text(commentId);
+        $( "#commented_date" ).text(commentDate.getDate()+"/"+commentDate.getMonth()+"/"+commentDate.getYear());
 
 
 
