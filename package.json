@@ -16,7 +16,8 @@
     "ipware": "^1.0.0",
     "jsonfile": "^3.0.0",
     "mongoose": "^4.10.6",
-    "mongoose-random": "^0.1.1"
+    "mongoose-random": "^0.1.1",
+    "mongoose-simple-random": "^0.4.1"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
